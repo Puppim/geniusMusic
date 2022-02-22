@@ -16,7 +16,9 @@ const PianoKeyboad: React.FC<keys> = ({ children, ...rest }) => {
   const [order , setOrde] = useState<number[]>(initial);
   const [clickedOrder, setClickedOrder] = useState<number[]>([]);
   const [score,setScore] = useState(0);
+  const [count,setcount] = useState(0);
   const [note,setNote] = useState('');
+
 
   let shuffleOrder = () => {
     let colorOrder = Math.floor(Math.random() * 7);
@@ -94,9 +96,18 @@ const checkOrder = () => {
 
 
 const play = ( )=>{
-    setNote(converNumberNotes(order[order.length-1]));
-    setTimeout(() => { setNote('');},1000);
+
+  const ary = order.map((i)=>{return converNumberNotes(i)})
+
+  for(let i = 1; i <= ary.length; i++){
+      setTimeout(function(){
+        setNote(ary[i - 1]+ "\("+i+"\)");
+        }, 1000 * i); 
+    
+  }
+    
 }
+
 
 let click = (note:number) => {
   if(start){
